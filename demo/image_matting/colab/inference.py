@@ -3,6 +3,7 @@ import sys
 import argparse
 import numpy as np
 from PIL import Image
+from pathlib import Path
 
 import torch
 import torch.nn as nn
@@ -58,6 +59,11 @@ if __name__ == '__main__':
     im_names = os.listdir(args.input_path)
     for im_name in im_names:
         print('Process image: {0}'.format(im_name))
+        matte_name = im_name.split('.')[0] + '.png'
+
+        if (Path(args.output_path) / matte_name).exists():
+            print(skip)
+            continue
 
         # read image
         im = Image.open(os.path.join(args.input_path, im_name))
@@ -101,5 +107,4 @@ if __name__ == '__main__':
         # resize and save matte
         matte = F.interpolate(matte, size=(im_h, im_w), mode='area')
         matte = matte[0][0].data.cpu().numpy()
-        matte_name = im_name.split('.')[0] + '.png'
         Image.fromarray(((matte * 255).astype('uint8')), mode='L').save(os.path.join(args.output_path, matte_name))
