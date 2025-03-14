@@ -62,7 +62,7 @@ if __name__ == '__main__':
         matte_name = im_name.split('.')[0] + '.png'
 
         if (Path(args.output_path) / matte_name).exists():
-            print(skip)
+            print('skip')
             continue
 
         # read image
