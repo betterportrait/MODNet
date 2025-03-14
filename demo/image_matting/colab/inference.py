@@ -57,11 +57,12 @@ if __name__ == '__main__':
 
     # inference images
     im_names = os.listdir(args.input_path)
+    already_processed = set(os.listdir(args.output_path))
     for im_name in im_names:
         print('Process image: {0}'.format(im_name))
         matte_name = im_name.split('.')[0] + '.png'
 
-        if (Path(args.output_path) / matte_name).exists():
+        if im_name in already_processed:
             print('skip')
             continue
 
