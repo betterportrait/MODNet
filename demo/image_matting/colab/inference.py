@@ -56,8 +56,8 @@ if __name__ == '__main__':
     modnet.eval()
 
     # inference images
-    im_names = os.listdir(args.input_path)
-    already_processed = set(os.listdir(args.output_path))
+    im_names = [f for f in os.listdir(args.input_path) if f.endswith('.png')]
+    already_processed = set([f for f in os.listdir(args.output_path) if f.endswith('.png')])
     for im_name in im_names:
         print('Process image: {0}'.format(im_name))
         matte_name = im_name.split('.')[0] + '.png'
